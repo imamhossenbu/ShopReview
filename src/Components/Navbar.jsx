@@ -27,6 +27,9 @@ const Navbar = () => {
         },
         {
             label: 'Contact', path: '/contact'
+        },
+        {
+            label: "FAQ", path: '/faq'
         }
 
     ];
