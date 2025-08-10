@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const faqs = [
     {
@@ -29,6 +29,13 @@ const faqs = [
 ];
 
 const Faq = () => {
+
+    const [openIndex, setOpenIndex] = useState(null);
+
+    const toggleFaq = (index) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 py-16 px-4">
             <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-lg p-10">
@@ -36,17 +43,38 @@ const Faq = () => {
                     Frequently Asked Questions
                 </h1>
 
-                <div className="accordion accordion-open accordion-arrow border border-gray-200 rounded-lg">
+                <div className="space-y-4">
                     {faqs.map((faq, index) => (
-                        <div key={index} className="accordion-item border-b border-gray-200 last:border-b-0">
-                            <input type="checkbox" id={`accordion-${index}`} className="peer hidden" />
-                            <label
-                                htmlFor={`accordion-${index}`}
-                                className="accordion-title flex justify-between items-center p-4 cursor-pointer select-none text-gray-800 font-semibold"
+                        <div
+                            key={index}
+                            className="border border-gray-200 rounded-lg overflow-hidden"
+                        >
+                            <button
+                                onClick={() => toggleFaq(index)}
+                                className="w-full flex justify-between items-center p-4 text-left text-gray-800 font-semibold focus:outline-none"
                             >
-                                {faq.question}
-                            </label>
-                            <div className="accordion-content px-4 py-2 text-gray-600 peer-checked:block hidden">
+                                <span>{faq.question}</span>
+                                <svg
+                                    className={`w-6 h-6 text-blue-700 transition-transform duration-300 ${openIndex === index ? "rotate-180" : "rotate-0"
+                                        }`}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M19 9l-7 7-7-7"
+                                    />
+                                </svg>
+                            </button>
+
+                            <div
+                                className={`px-4 pb-4 text-gray-600 transition-all duration-300 ease-in-out ${openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                                    } overflow-hidden`}
+                            >
                                 {faq.answer}
                             </div>
                         </div>
@@ -55,5 +83,6 @@ const Faq = () => {
             </div>
         </div>
     );
-}
-export default Faq
+};
+
+export default Faq;
